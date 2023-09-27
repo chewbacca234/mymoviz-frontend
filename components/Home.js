@@ -42,18 +42,14 @@ function Home() {
       .then(res => res.json())
       .then(res => {
         console.log('res', res)
-        if (res.result) {
-          res.movies.map(movie => tempMoviesData.push({
-            title: movie.title,
-            poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            voteAverage: movie.vote_average,
-            voteCount: movie.vote_count,
-            overview: movie.overview
-          }));
-          setMoviesData(tempMoviesData)
-        } else {
-          console.log('ERROR', res.err);
-        }
+        res.movies.map(movie => tempMoviesData.push({
+          title: movie.title,
+          poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+          voteAverage: movie.vote_average,
+          voteCount: movie.vote_count,
+          overview: movie.overview
+        }));
+        setMoviesData(tempMoviesData)
       });
   }, []);
   console.log('moviesData', moviesData)
