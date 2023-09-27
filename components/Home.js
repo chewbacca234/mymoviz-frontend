@@ -38,7 +38,7 @@ function Home() {
   // Movies list from fetch TMDB
   useEffect(() => {
     const tempMoviesData = [];
-    fetch('https://mymoviz-backend-ipjlvwf7y-chewbacca234.vercel.app/movies')
+    fetch('https://mymoviz-backend-lac.vercel.app/movies')
       .then(res => res.json())
       .then(res => {
         console.log('res', res)
