@@ -37,19 +37,20 @@ function Home() {
 
   // Movies list from fetch TMDB
   useEffect(() => {
-    const tempMoviesData = [];
     fetch('https://mymoviz-backend-lac.vercel.app/movies')
       .then(res => res.json())
       .then(res => {
         console.log('res', res)
-        res.movies.map(movie => tempMoviesData.push({
-          title: movie.title,
-          poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-          voteAverage: movie.vote_average,
-          voteCount: movie.vote_count,
-          overview: movie.overview
-        }));
-        setMoviesData(tempMoviesData)
+        const fomattedData = res.movies.map(movie => {
+          return {
+            title: movie.title,
+            poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            voteAverage: movie.vote_average,
+            voteCount: movie.vote_count,
+            overview: movie.overview
+          }
+        });
+        setMoviesData(fomattedData);
       });
   }, []);
   console.log('moviesData', moviesData)
