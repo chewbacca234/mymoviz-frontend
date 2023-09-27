@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Popover, Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
@@ -19,11 +19,10 @@ function Home() {
     }
   };
 
-  // Liked movies popover
   const likedMoviesPopover = likedMovies.map((data, i) => {
     return (
       <div key={i} className={styles.likedMoviesContainer}>
-        <span className={styles.likedMovie}>{data}</span>
+        <span className="likedMovie">{data}</span>
         <FontAwesomeIcon icon={faCircleXmark} onClick={() => updateLikedMovies(data)} className={styles.crossIcon} />
       </div>
     );
@@ -35,25 +34,23 @@ function Home() {
     </div>
   );
 
-  // Movies list from fetch TMDB
+  // Movies list
   useEffect(() => {
-    fetch('https://mymoviz-backend-lac.vercel.app/movies')
-      .then(res => res.json())
-      .then(res => {
-        console.log('res', res)
-        const fomattedData = res.movies.map(movie => {
-          return {
-            title: movie.title,
-            poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            voteAverage: movie.vote_average,
-            voteCount: movie.vote_count,
-            overview: movie.overview
+    fetch('http://localhost:3000/movies')
+      .then(response => response.json())
+      .then(data => {
+        const formatedData = data.movies.map(movie => {
+          const poster = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+          let overview = movie.overview;
+          if (overview.length > 250) {
+            overview = overview.substring(0, 250) + '...';
           }
+
+          return { title: movie.title, poster, voteAverage: movie.vote_average, voteCount: movie.vote_count, overview };
         });
-        setMoviesData(fomattedData);
+        setMoviesData(formatedData);
       });
   }, []);
-  console.log('moviesData', moviesData)
 
   const movies = moviesData.map((data, i) => {
     const isLiked = likedMovies.some(movie => movie === data.title);
