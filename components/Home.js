@@ -45,7 +45,7 @@ function Home() {
         if (res.result) {
           res.movies.map(movie => tempMoviesData.push({
             title: movie.title,
-            poster: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+            poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
             voteAverage: movie.vote_average,
             voteCount: movie.vote_count,
             overview: movie.overview
